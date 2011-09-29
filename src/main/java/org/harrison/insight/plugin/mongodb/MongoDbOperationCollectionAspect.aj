@@ -14,6 +14,8 @@ public aspect MongoDbOperationCollectionAspect extends
 
     @Override
     protected Operation createOperation(final JoinPoint joinPoint) {
+        Operation op = new Operation();
+        return op;
 	return new MongoDbOperation(getSourceCodeLocation(joinPoint), joinPoint
 		.getSignature().getName(), ArgUtils.toString(joinPoint
 		.getArgs()));
