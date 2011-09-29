@@ -3,6 +3,8 @@ package org.harrison.insight.plugin.mongodb;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.springsource.insight.intercept.operation.OperationList;
+import com.springsource.insight.intercept.operation.OperationType;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 
@@ -11,11 +13,10 @@ import com.springsource.insight.collection.AbstractOperationCollectionAspect;
 import com.springsource.insight.intercept.operation.Operation;
 
 public aspect MongoCursorOperationCollectionAspect extends
-	AbstractOperationCollectionAspect {
-    private static final String UNKNOWN = "?unknown?";
-    private static final List<String> EMPTY_ARGS = new ArrayList<String>();
+        AbstractOperationCollectionAspect {
+    public static final OperationType TYPE = OperationType.valueOf("mongo_cursor_operation");
 
-    private pointcut nextExecution(): 
+    private pointcut nextExecution():
 	execution(* DBCursor.next(..));
 
     private pointcut skipExecution(): 
@@ -43,20 +44,27 @@ public aspect MongoCursorOperationCollectionAspect extends
 
     @Override
     protected Operation createOperation(final JoinPoint joinPoint) {
-	final Signature signature = joinPoint.getSignature();
-	final DBCursor cursor = (DBCursor) joinPoint.getTarget();
+        final Signature signature = joinPoint.getSignature();
+        final DBCursor cursor = (DBCursor) joinPoint.getTarget();
+        Operation op = new Operation()
+                .type(TYPE)
+                .label("MongoDB: DBCursor." + signature.getName() + "()")
+                .sourceCodeLocation(getSourceCodeLocation(joinPoint));
 
-	if (cursor == null) {
-	    return new MongoCursorOperation(getSourceCodeLocation(joinPoint),
-		    signature.getName(), EMPTY_ARGS, UNKNOWN, UNKNOWN, UNKNOWN);
-	}
+        if (cursor == null) {
+            return op;
+        }
 
-	final String collectionName = MongoUtils.extractCollectionName(cursor);
+        final String collectionName = MongoUtils.extractCollectionName(cursor);
+        op.put("collection", collectionName)
+                .put("keysWanted", ArgUtils.toString(cursor.getKeysWanted()))
+                .put("query", ArgUtils.toString(cursor.getQuery()));
+        OperationList opList = op.createList("args");
+        List<String> args = ArgUtils.toString(joinPoint.getArgs());
+        for (String arg : args) {
+            opList.add(arg);
+        }
+        return op;
 
-	return new MongoCursorOperation(getSourceCodeLocation(joinPoint),
-		signature.getName(), ArgUtils.toString(joinPoint.getArgs()),
-		ArgUtils.toString(cursor.getKeysWanted()),
-		ArgUtils.toString(cursor.getQuery()), collectionName);
     }
-
-    }
+}
