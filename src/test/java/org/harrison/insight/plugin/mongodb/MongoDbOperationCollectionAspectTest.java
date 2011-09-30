@@ -25,7 +25,6 @@ public class MongoDbOperationCollectionAspectTest
     @Test
     public void dbCommand() throws Exception {
         Mongo mongo = mock(Mongo.class);
-        //DB db = mock(DB.class);
         DB db = new DBDummy(mongo, "my thing");
         db.command("Hello there");
         Operation op = (Operation) getLastEntered(Operation.class);

@@ -1,6 +1,5 @@
 package org.harrison.insight.plugin.mongodb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.springsource.insight.intercept.operation.OperationList;
@@ -17,13 +16,13 @@ public aspect MongoCursorOperationCollectionAspect extends
     public static final OperationType TYPE = OperationType.valueOf("mongo_cursor_operation");
 
     private pointcut nextExecution():
-	execution(* DBCursor.next(..));
+	execution(* DBCursor.next());
 
     private pointcut skipExecution(): 
-	execution(* DBCursor.skip(..));
+	execution(* DBCursor.skip(int));
 
     private pointcut limitExecution(): 
-	execution(* DBCursor.limit(..));
+	execution(* DBCursor.limit(int));
 
     private pointcut toArrayExecution(): 
 	execution(* DBCursor.toArray(..));
@@ -32,7 +31,7 @@ public aspect MongoCursorOperationCollectionAspect extends
 	execution(* DBCursor.sort(..));
 
     private pointcut batchSizeExecution(): 
-	execution(* DBCursor.batchSize(..));
+	execution(* DBCursor.batchSize(int));
 
     public pointcut collectionPoint(): 
 	(nextExecution() && !cflowbelow(nextExecution())) ||
@@ -51,16 +50,10 @@ public aspect MongoCursorOperationCollectionAspect extends
                 .label("MongoDB: DBCursor." + signature.getName() + "()")
                 .sourceCodeLocation(getSourceCodeLocation(joinPoint));
 
-        if (cursor == null) {
-            return op;
-        }
-
-        final String collectionName = MongoUtils.extractCollectionName(cursor);
-        op.put("collection", collectionName)
-                .put("keysWanted", ArgUtils.toString(cursor.getKeysWanted()))
-                .put("query", ArgUtils.toString(cursor.getQuery()));
+        op.put("keysWanted", MongoArgumentUtils.toString(cursor.getKeysWanted()))
+          .put("query", MongoArgumentUtils.toString(cursor.getQuery()));
         OperationList opList = op.createList("args");
-        List<String> args = ArgUtils.toString(joinPoint.getArgs());
+        List<String> args = MongoArgumentUtils.toString(joinPoint.getArgs());
         for (String arg : args) {
             opList.add(arg);
         }
