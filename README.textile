@@ -53,5 +53,6 @@ h2. Rejected enhancements
 h2. Contact
 
 Stephen Harrison (stephen [at] harrison [dot] org)
+Merged and Updated to Insight 1.7.0 by the Insight Team
 
 

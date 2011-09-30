@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package org.harrison.insight.plugin.mongodb;
+package com.springsource.insight.plugin.mongodb;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -12,6 +12,9 @@ import com.springsource.insight.idk.AbstractOperationViewTest;
 import com.springsource.insight.idk.WebApplicationContextLoader;
 import com.springsource.insight.intercept.operation.Operation;
 import com.springsource.insight.intercept.operation.OperationFields;
+import com.springsource.insight.plugin.mongodb.MongoCollectionOperationCollectionAspect;
+import com.springsource.insight.plugin.mongodb.MongoCursorOperationCollectionAspect;
+import com.springsource.insight.plugin.mongodb.MongoDbOperationCollectionAspect;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;

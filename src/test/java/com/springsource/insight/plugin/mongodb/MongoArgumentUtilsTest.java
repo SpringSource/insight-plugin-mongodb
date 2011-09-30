@@ -1,9 +1,10 @@
-package org.harrison.insight.plugin.mongodb;
+package com.springsource.insight.plugin.mongodb;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
 
+import com.springsource.insight.plugin.mongodb.MongoArgumentUtils;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Test;

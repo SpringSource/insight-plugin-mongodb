@@ -1,4 +1,4 @@
-package org.harrison.insight.plugin.mongodb;
+package com.springsource.insight.plugin.mongodb;
 
 import com.springsource.insight.intercept.operation.OperationList;
 import com.springsource.insight.intercept.operation.OperationType;

@@ -5,20 +5,20 @@
                 http://www.springframework.org/schema/insight-idk http://www.springframework.org/schema/insight-idk/insight-idk-1.0.xsd">
 
 	<insight:plugin name="mongodb" version="${project.version}"
-		publisher="Stephen Harrison (stephen@harrison.org)" />
+		publisher="Stephen Harrison (stephen@harrison.org) and the Insight Team" />
 
 	<insight:operation-view operation="mongo_collection_operation"
-		template="org/harrison/insight/plugin/mongodb/mongo_collection_operation.ftl" />
+		template="com/springsource/insight/plugin/mongodb/mongo_collection_operation.ftl" />
 	<insight:operation-group operation="mongo_collection_operation"
 		group="MongoDB" />
 
 	<insight:operation-view operation="mongo_cursor_operation"
-		template="org/harrison/insight/plugin/mongodb/mongo_cursor_operation.ftl" />
+		template="com/springsource/insight/plugin/mongodb/mongo_cursor_operation.ftl" />
 	<insight:operation-group operation="mongo_cursor_operation"
 		group="MongoDB" />
 
 	<insight:operation-view operation="mongo_db_operation"
-		template="org/harrison/insight/plugin/mongodb/mongo_db_operation.ftl" />
+		template="com/springsource/insight/plugin/mongodb/mongo_db_operation.ftl" />
 	<insight:operation-group operation="mongo_db_operation"
 		group="MongoDB" />
 </beans>

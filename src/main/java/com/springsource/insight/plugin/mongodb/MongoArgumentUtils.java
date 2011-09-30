@@ -1,4 +1,4 @@
-package org.harrison.insight.plugin.mongodb;
+package com.springsource.insight.plugin.mongodb;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

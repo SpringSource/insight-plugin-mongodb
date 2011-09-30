@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package org.harrison.insight.plugin.mongodb;
+package com.springsource.insight.plugin.mongodb;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
