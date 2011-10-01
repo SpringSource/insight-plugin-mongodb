@@ -20,7 +20,6 @@ public aspect MongoDbOperationCollectionAspect extends AbstractOperationCollecti
     @Override
     protected Operation createOperation(final JoinPoint joinPoint) {
         Operation op = new Operation().label("MongoDB: DB." + joinPoint.getSignature().getName() + "()").type(TYPE);
-        op.sourceCodeLocation(getSourceCodeLocation(joinPoint));
         OperationList opList = op.createList("args");
 
         List<String> args = MongoArgumentUtils.toString(joinPoint.getArgs());

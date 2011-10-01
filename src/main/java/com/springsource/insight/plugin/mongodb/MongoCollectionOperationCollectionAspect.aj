@@ -66,7 +66,7 @@ public aspect MongoCollectionOperationCollectionAspect extends
         final DBCollection collection = (DBCollection) joinPoint.getThis();
         Operation op = new Operation()
                 .label("MongoDB: " + collection + "." + signature.getName() + "()")
-                .type(TYPE).sourceCodeLocation(getSourceCodeLocation(joinPoint))
+                .type(TYPE)
                 .put("collection", collection.getFullName());
         OperationList opList = op.createList("args");
         List<String> args = MongoArgumentUtils.toString(joinPoint.getArgs());

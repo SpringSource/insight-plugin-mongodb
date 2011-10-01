@@ -9,5 +9,3 @@
     	${operation.returnValue?html}
     </@insight.entry>
 </@insight.group>
-
-<@insight.sourceCodeLocation location=operation.sourceCodeLocation />

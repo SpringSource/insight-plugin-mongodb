@@ -20,20 +20,12 @@ import com.mongodb.WriteResult;
 
 /**
  * Utilities for converting method arguments for MongoDB-related operations
- * <p/>
- * It's a bit messy. Sorry.
- *
- * @author stephen harrison
  */
 public class MongoArgumentUtils {
     /**
-     * In any case, the maximum length of a String we generate for the operation
+     * The maximum length of a string we generate
      */
-    private static final int MAX_STRING_LENGTH = 1000;
-
-    /**
-     * How we show there's more
-     */
+    private static final int MAX_STRING_LENGTH = 256;
     private static final String ELLIPSIS = "...";
 
     /**
@@ -111,13 +103,13 @@ public class MongoArgumentUtils {
         {
             // Wrapper classes
             //
-            for (final Class<?> cls : SIMPLE_CLASSES) {
+            for (Class<?> cls : SIMPLE_CLASSES) {
                 put(cls, DefaultStringForm);
             }
 
             // MongoDB classes
             //
-            for (final Class<?> cls : SIMPLE_MONGO_CLASSES) {
+            for (Class<?> cls : SIMPLE_MONGO_CLASSES) {
                 put(cls, DefaultStringForm);
             }
 
@@ -152,8 +144,8 @@ public class MongoArgumentUtils {
                 int soFar = 0;
 
                 for (final Object arg : array) {
-                    final String result = MongoArgumentUtils.toString(arg, maxLength
-                            - soFar);
+                    final String result
+                            = MongoArgumentUtils.toString(arg, maxLength - soFar);
 
                     soFar += result.length();
 
@@ -184,8 +176,8 @@ public class MongoArgumentUtils {
             return "null";
         }
 
-        final Class<? extends Object> cls = object.getClass();
-        final StringForm<Object> stringForm = (StringForm<Object>) STRING_FORM_MAP
+        Class<? extends Object> cls = object.getClass();
+        StringForm<Object> stringForm = (StringForm<Object>) STRING_FORM_MAP
                 .get(cls);
 
         if (stringForm != null) {
@@ -205,7 +197,8 @@ public class MongoArgumentUtils {
 
     private static String trimWithEllipsis(final String string,
                                            final int maxLength) {
-        return string.length() <= maxLength + ELLIPSIS.length() ? string
+        return string.length() <= maxLength + ELLIPSIS.length()
+                ? string
                 : string.substring(0, maxLength) + ELLIPSIS;
     }
 }

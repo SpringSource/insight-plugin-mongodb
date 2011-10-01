@@ -47,8 +47,7 @@ public aspect MongoCursorOperationCollectionAspect extends
         final DBCursor cursor = (DBCursor) joinPoint.getTarget();
         Operation op = new Operation()
                 .type(TYPE)
-                .label("MongoDB: DBCursor." + signature.getName() + "()")
-                .sourceCodeLocation(getSourceCodeLocation(joinPoint));
+                .label("MongoDB: DBCursor." + signature.getName() + "()");
 
         op.put("keysWanted", MongoArgumentUtils.toString(cursor.getKeysWanted()))
           .put("query", MongoArgumentUtils.toString(cursor.getQuery()));
